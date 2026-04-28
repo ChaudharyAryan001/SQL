@@ -1,0 +1,145 @@
+create database my;
+
+use my;
+
+#customer table
+create table customer(
+     customer_id int primary key,
+     first_name varchar(20),
+     last_name varchar(20),
+     email varchar(30),
+     registration_date date  
+     );
+
+#INSERT 15 SIMPLE RECORD INTO THE CUSTOMER TABLE
+INSERT INTO customer (customer_id, first_name,last_name, email, registration_date) VALUES
+(1, 'Aryan', 'Chaudhary', 'aryan123@gmail.com', '2023-01-10'),
+(2, 'Smit', 'Patel', 'smit456@gmail.com', '2023-01-12'),
+(3, 'Priya', 'Sharma', 'priya.s@gmail.com', '2023-01-15'),
+(4, 'Rahul', 'Verma', 'rahul.v@gmail.com', '2023-01-20'),
+(5, 'Anjali', 'Mehta', 'anjali.m@gmail.com', '2023-01-25'),
+(6, 'Rohan', 'Gajjar', 'rohan.g@gmail.com', '2023-02-02'),
+(7, 'Sneha', 'Shah', 'sneha.s@gmail.com', '2023-02-05'),
+(8, 'Karan', 'Prajapati', 'karan.p@gmail.com', '2023-02-10'),
+(9, 'Mansi', 'Joshi', 'mansi.j@gmail.com', '2023-02-14'),
+(10, 'Deep', 'Solanki', 'deep.s@gmail.com', '2023-02-20'),
+(11, 'Heena', 'Desai', 'heena.d@gmail.com', '2023-02-28'),
+(12, 'Vivek', 'Bhatt', 'vivek.b@gmail.com', '2023-03-05'),
+(13, 'Kavita', 'Rana', 'kavita.r@gmail.com', '2023-03-12'),
+(14, 'Yash', 'Trivedi', 'yash.t@gmail.com', '2023-03-18'),
+(15, 'Ishita', 'Vora', 'ishita.v@gmail.com', '2023-03-25');     
+
+#SHOW CUSTOMER TABLE
+select * from customer;
+
+#ORDER TABLE
+create table orders(
+   order_id int primary key,
+   customer_id int,
+   order_date date,
+   total_amount decimal(9,2) );
+   
+#INSERT 15 SAMPLE RECORD INTO THE ORDER TABLE    
+INSERT INTO orders (order_id, customer_id, order_date, total_amount) VALUES
+(101, 1, '2023-01-15', 1500.50),
+(102, 2, '2023-01-18', 2500.00),
+(103, 3, '2023-01-20', 450.75),
+(104, 4, '2023-01-25', 1200.00),
+(105, 5, '2023-02-01', 890.25),
+(106, 6, '2023-02-05', 3100.00),
+(107, 7, '2023-02-10', 150.00),
+(108, 8, '2023-02-15', 5500.50),
+(109, 9, '2023-02-20', 999.99),
+(110, 10, '2023-02-25', 1750.00),
+(111, 11, '2023-03-01', 220.00),
+(112, 12, '2023-03-05', 4300.25),
+(113, 13, '2023-03-10', 670.00),
+(114, 14, '2023-03-15', 120.50),
+(115, 15, '2023-03-20', 2900.00);
+
+#SHOW ORDERS TABLE
+select * from orders;
+
+#EMPLOYEES TABLE
+create table employees(
+     employee_id int primary key,
+     first_name varchar(15),
+     last_name varchar(15),
+     department varchar(10),
+     hire_date date,
+     salary decimal(8,2) );
+
+#INSERT 15 SAMPLE RECORD INTO THE EMPLOYEES TABLE
+INSERT INTO employees (employee_id, first_name, last_name, department, hire_date, salary) VALUES
+(1, 'Amit', 'Patel', 'IT', '2022-01-15', 55000.00),
+(2, 'Sonal', 'Mehta', 'HR', '2022-02-10', 45000.00),
+(3, 'Raj', 'Shah', 'Sales', '2022-03-05', 38000.00),
+(4, 'Kavita', 'Joshi', 'IT', '2022-04-20', 60000.00),
+(5, 'Vijay', 'Vora', 'Admin', '2022-05-12', 32000.00),
+(6, 'Neha', 'Trivedi', 'HR', '2022-06-01', 47000.00),
+(7, 'Sagar', 'Panchal', 'Sales', '2022-07-18', 39000.00),
+(8, 'Pooja', 'Pandya', 'IT', '2022-08-25', 52000.00),
+(9, 'Rahul', 'Mistry', 'Support', '2022-09-10', 30000.00),
+(10, 'Hina', 'Chauhan', 'Admin', '2022-10-05', 33000.00),
+(11, 'Anil', 'Gajjar', 'Sales', '2022-11-15', 41000.00),
+(12, 'Maya', 'Desai', 'IT', '2022-12-20', 58000.00),
+(13, 'Deepak', 'Rana', 'Support', '2023-01-10', 31000.00),
+(14, 'Riddhi', 'Solanki', 'HR', '2023-02-14', 46000.00),
+(15, 'Karan', 'Bhatt', 'Sales', '2023-03-01', 40000.00);
+
+#SHOW EMPLOYEES TBALE
+select * from employees;
+
+#INNER JOIN RETRIEVE ALL ORDERS AND CUSTOMER DETAILLS WHERE CUSTOMER
+select o.order_id,f.first_name from orders as o inner join customer as f on o.customer_id=f.customer_id;
+
+#LEFT JOIN RETRIEVE ALL ORDERS AND CUSTOMER DETAILLS WHERE CUSTOMER
+select o.order_id,f.first_name from orders as o left join customer as f on f.customer_id=o.customer_id;
+
+#RIGHT JOIN RETRIEVE ALL ORDERS AND CUSTOMER DETAILLS WHERE CUSTOMER
+select o.order_id,f.first_name from orders as o right join customer as f on f.customer_id=o.customer_id;
+
+#SUBQUERY TO FIND CUSTOMER WHO HAVE PLACED ORDER THE AVERAGE AMOUNT
+select first_name , salary from employees where salary > (select avg(salary) from employees);
+
+#EXTRACT THE YEAR AND MONTH FROM THE ORDERDATE
+select order_date,year(order_date ) as order_year , month(order_date) as order_month from orders;
+
+#FORMAT THE ORDERDATE TO MORE READABLE FORMAT
+select order_date,date_format(order_date,'%d-%b-%Y') as date_order from orders;
+
+#CONCATENATE FIRSTNAME AND LAST NAME TO FORM A FULL NAME
+select first_name, last_name, CONCAT(first_name, ' ', last_name) AS FullName FROM customer;
+
+#REPLACE PART OF STRING 
+select first_name, REPLACE(first_name, 'Priya', 'Riya') AS NewName FROM customer;
+
+#CONVERT FIRST NAME UPPER AND LAST NAME LOWER
+select UPPER(first_name) AS UpperName, LOWER(last_name) AS LowerName FROM customer;
+
+#TRIM EXTRA SPACES FROM THE EMAIL FIELD
+select email, TRIM(email) AS Email FROM customer;
+
+#CALCULATE THE RUNNING TOTAL OF TOTAL AMOUNT FOR EACH ORDER
+select order_id, order_date, total_amount,SUM(total_amount) OVER (ORDER BY order_date) AS Total from orders;
+
+#RANK ORDERS BASED ON TOTAL AMOUNT USING RANK() FUNCTION
+select order_id, total_amount,RANK() OVER (ORDER BY total_amount DESC) AS order_rank FROM orders;
+
+#ASSIGN A DISCOUNT BASED ON TOTAL AMOUNT IN ORDERS
+select order_id, total_amount,
+       case 
+            when total_amount > 1000 then '10% Off'
+            when total_amount > 500 then '5% Off'
+            else 'No Discount'
+       end as Discount_Category
+FROM orders;
+
+#CATEGORIZE EMPLOYEES SALARIES AS HIGH , MEDIUM, OR LOW
+select first_name, salary,
+       case
+            when salary > 70000 THEN 'High'
+            when salary BETWEEN 40000 AND 70000 THEN 'Medium'
+            else 'Low'
+       end as SalaryLevel
+from employees;
