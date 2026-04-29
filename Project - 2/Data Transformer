@@ -99,6 +99,14 @@ select o.order_id,f.first_name from orders as o left join customer as f on f.cus
 #RIGHT JOIN RETRIEVE ALL ORDERS AND CUSTOMER DETAILLS WHERE CUSTOMER
 select o.order_id,f.first_name from orders as o right join customer as f on f.customer_id=o.customer_id;
 
+# full outer join retrieve all customer and all orders regardlless of matching
+select o.order_id,f.first_name from orders as o right join customer as f on f.customer_id=o.customer_id
+
+union
+
+select o.order_id,f.first_name from orders as o left join customer as f on f.customer_id=o.customer_id;
+
+
 #SUBQUERY TO FIND CUSTOMER WHO HAVE PLACED ORDER THE AVERAGE AMOUNT
 select first_name , salary from employees where salary > (select avg(salary) from employees);
 
